@@ -1,0 +1,127 @@
+<!-- Flash messages -->
+<div class="row">
+  <app-flash-message
+    *ngIf="showFlashMessage"
+    (close)="showFlashMessage = false"
+    [flashMessage]="flashMessage"
+    [alertSuccess]="flashMessageSuccess">
+  </app-flash-message>
+</div>
+
+<div class="row">
+  <h1>
+    Simulación de Modelo M/G/1
+  </h1>
+</div>
+
+<!-- Form -->
+<div class="row">
+  <div class="form-group">
+    <label for="inputLambdaMG1">λ: Tasa media de llegada en unidad de tiempo</label>
+    <input type="number" class="form-control" id="inputLambdaMG1" aria-describedby="inputLambdaMG1Help"
+           placeholder="Escriba la tasa media de llegada" [(ngModel)]="lambdaText">
+    <small id="inputLambdaMG1Help" class="form-text text-muted">λ debe ser un número mayor a 0.</small>
+  </div>
+
+  <div class="form-group">
+    <label for="inputMuMG1">μ: Tasa media de servicio en unidad de tiempo</label>
+    <input type="number" class="form-control" id="inputMuMG1" aria-describedby="inputMuMG1Help"
+           placeholder="Escriba la tasa media de servicio" [(ngModel)]="muText">
+    <small id="inputMuMG1Help" class="form-text text-muted">μ debe ser un número mayor a λ para que el sistema sea estable</small>
+  </div>
+
+  <br/>
+
+  <div class="form-group">
+    <label  class="col-sm-12 col-form-label">Elija el tipo de distribución para el tiempo de servicio:</label>
+
+    <div class="" style="margin-left: 15px;">
+      <div class="form-check form-check-inline">
+        <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="gRadios" id="erlangRadio" value="1" [(ngModel)]="distributionText">
+          Erlang
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="gRadios" id="generalRadio" value="2" [(ngModel)]="distributionText">
+          Otra
+        </label>
+      </div>
+    </div>
+
+    <div *ngIf="distributionText === '1' || distributionText === '2' || distributionText === '3'" class="col-sm-12">
+      <div  [ngSwitch]="distributionText" class="form-group" style="margin-left: 15px; margin-top: 5px;">
+
+        <!-- Erlang -->
+        <label *ngSwitchCase="'1'" for="inputErlang">k: Forma</label>
+        <input *ngSwitchCase="'1'" type="text" class="form-control" id="inputErlang" aria-describedby="inputErlangHelp"
+               placeholder="Escriba el parámetro de forma k" [(ngModel)]="parameterErlangText">
+        <small *ngSwitchCase="'1'" id="inputErlangHelp" class="form-text text-muted">k debe ser un entero mayor a 0</small>
+
+        <!-- Other -->
+        <label *ngSwitchCase="'2'" for="inputOther">σ^2: Varianza</label>
+        <input *ngSwitchCase="'2'" type="number" class="form-control" id="inputOther" aria-describedby="inputOtherHelp"
+               placeholder="Escriba la varianza de la distribución de su elección" [(ngModel)]="parameterOtherText">
+        <small *ngSwitchCase="'2'" id="inputOtherHelp" class="form-text text-muted">La varianza debe ser un número mayor a cero</small>
+
+      </div>
+    </div>
+
+    <small id="inputGHelp" class="form-text text-muted" style="margin-left: 15px;">Elija el tipo de distribución para el tiempo de servicio que más le convenga, también, puede elegir otro para proporcionar la varianza de otra distribución</small>
+
+  </div>
+
+  <div class="form-group">
+    <label for="inputCs">Cs: Costo de servicio en unidad monetaria</label>
+    <input type="number" class="form-control" id="inputCs" aria-describedby="inputCsHelp"
+           placeholder="Escriba el costo de servicio" [(ngModel)]="csText">
+    <small id="inputCsHelp" class="form-text text-muted">Cs debe ser un número mayor o igual cero</small>
+  </div>
+
+  <div class="form-group">
+    <label for="inputCw">Cw: Costo de espera en unidad monetaria</label>
+    <input type="number" class="form-control" id="inputCw" aria-describedby="inputCwHelp"
+           placeholder="Escriba el costo de espera" [(ngModel)]="cwText">
+    <small id="inputCwHelp" class="form-text text-muted">Cw debe ser un número mayor o igual a cero</small>
+  </div>
+
+
+  <button type="submit" class="btn btn-info" (click)="onSimulateRow()">Calcular medidas de desempeño y P0</button>
+</div>
+
+<hr>
+
+<!-- Simulation result -->
+<div class="row" *ngIf="flashMessageSuccess && showFlashMessage">
+  <div class="jumbotron">
+    <h3 class="display-3">Medidas de desempeño:</h3>
+    <hr>
+    <!-- Performance values -->
+    <div>
+      <h5>P0 (probabilidad de 0 clientes en el sistema): {{ resultP0 }}</h5>
+    </div>
+    <div>
+      <h5>𝜌 (factor de utilización del sistema): {{ resultRo }}</h5>
+    </div>
+    <div>
+      <h5>L (promedio de clientes esperado en el sistema): {{ resultL }} clientes</h5>
+    </div>
+    <div>
+      <h5>Lq (promedio de clientes esperado en la cola): {{ resultLq }} clientes</h5>
+    </div>
+    <div>
+      <h5>W (tiempo promedio esperado en el sistema): {{ resultW }} unidades de tiempo</h5>
+    </div>
+    <div>
+      <h5>Wq (tiempo promedio esperado en la cola): {{ resultWq }} unidades de tiempo</h5>
+    </div>
+
+    <!-- Costs -->
+    <h3 class="display-3">Costo esperado del sistema:</h3>
+    <hr>
+    <div>
+      <h5>Ct (costo total esperado): {{ resultCt }} unidades monetarias</h5>
+    </div>
+  </div>
+</div>

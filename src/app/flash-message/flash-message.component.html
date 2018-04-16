@@ -1,0 +1,8 @@
+<div
+  [ngClass]="{ alert: true, 'alert-success': alertSuccess, 'alert-danger': !alertSuccess, 'alert-dismissible': true }"
+  role="alert">
+  {{ flashMessage }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="onDestroyAlert()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
