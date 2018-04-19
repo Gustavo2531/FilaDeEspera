@@ -22,29 +22,29 @@
       <div class="form-group">
         <label for="inputLamda">λ: Tasa media de llegada en unidad de tiempo</label>
         <input type="number" class="form-control" id="inputLamda" aria-describedby="inputLamdaHelp"
-               placeholder="Escriba la tasa de media de llegadas (λ)" [(ngModel)]="lamdaText">
+               placeholder="Escriba la tasa de media de llegadas (λ)" [(ngModel)]="textLambda">
         <small id="inputLamdaHelp" class="form-text text-muted">λ debe de ser un número mayor a 0.</small>
       </div>
       <div class="form-group">
         <label for="inputK">Número de Clientes (k)</label>
         <input type="text" class="form-control" id="inputK" aria-describedby="inputKHelp"
-               placeholder="Escriba el número de clientes (k)" [(ngModel)]="kText">
+               placeholder="Escriba el número de clientes (k)" [(ngModel)]="textK">
         <small id="inputKHelp" class="form-text text-muted">El número de clientes debe de ser un entero mayor a 0.</small>
       </div>
       <div class="form-group">
         <label for="inputS">Número de Servidores (s)</label>
         <input type="text" class="form-control" id="inputS" aria-describedby="inputSHelp"
-               placeholder="Escriba el número de servidores (s)" [(ngModel)]="sText">
+               placeholder="Escriba el número de servidores (s)" [(ngModel)]="textS">
         <small id="inputSHelp" class="form-text text-muted">El número de servidores debe de ser un entero mayor a 0 y menor o igual a k.</small>
       </div>
       <div class="form-group">
         <label for="inputMiu">μ: Tasa media de servicio en unidad de tiempo</label>
         <input type="text" class="form-control" id="inputMiu" aria-describedby="inpuMiuHelp"
-               placeholder="Escriba la tasa de media de Servicios (μ)" [(ngModel)]="muText">
+               placeholder="Escriba la tasa de media de Servicios (μ)" [(ngModel)]="textMu">
         <small id="inpuMiuHelp" class="form-text text-muted">μ * s debe ser un número mayor a λ para que el sistema sea estable</small>
       </div>
 
-      <div class="form-group">
+      <!--<div class="form-group">
         <label for="inputCs">Cs: Costo de servicio en unidad monetaria</label>
         <input type="number" class="form-control" id="inputCs" aria-describedby="inputCsHelp"
                placeholder="Escriba el costo de servicio" [(ngModel)]="csText">
@@ -56,7 +56,7 @@
         <input type="number" class="form-control" id="inputCw" aria-describedby="inputCwHelp"
                placeholder="Escriba el costo de espera" [(ngModel)]="cwText">
         <small id="inputCwHelp" class="form-text text-muted">Cw debe ser un número mayor o igual a cero</small>
-      </div>
+      </div>-->
 
       <button type="submit" class="btn btn-info" (click)="onSimulateRow()">Calcular Medidas de Desempeño y P0</button>
 
@@ -72,12 +72,6 @@
     <hr>
     <!-- Performance values -->
     <div>
-      <h5>P0 (probabilidad de 0 clientes en el sistema): {{ resultP0 }}</h5>
-    </div>
-    <div>
-      <h5>𝜌 (factor de utilización del sistema): {{ resultRo }}</h5>
-    </div>
-    <div>
       <h5>L (promedio de clientes esperado en el sistema): {{ resultL }} clientes</h5>
     </div>
     <div>
@@ -89,12 +83,19 @@
     <div>
       <h5>Wq (tiempo promedio esperado en la cola): {{ resultWq }} unidades de tiempo</h5>
     </div>
+    <div>
+      <h5>P0 (probabilidad de 0 clientes en el sistema): {{ resultP0 }}</h5>
+    </div>
+    <div>
+      <h5>𝜌 (factor de utilización del sistema): {{ resultRo }}</h5>
+    </div>
 
-    <!-- Costs -->
+    <!-- Costs 
     <h3 class="display-3">Costo esperado del sistema:</h3>
     <hr>
     <div>
       <h5>Ct (costo total esperado): {{ resultCt }} unidades monetarias</h5>
     </div>
+  -->
   </div>
 </div>
