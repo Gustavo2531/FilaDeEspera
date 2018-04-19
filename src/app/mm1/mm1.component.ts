@@ -10,24 +10,25 @@ export class Mm1Component implements OnInit {
   flashMessageSuccess = true;
   flashMessage = '';
 
-  lambdaText = '';
-  muText = '';
+  textLambda = '';
+  textMu = '';
   csText = '';
   cwText = '';
 
-  lambdaNumber = 0;
-  muNumber = 0;
-  sNumber = 1;
+  numLambda = 0;
+  numMu = 0;
+  numS = 1;
   csNumber = 0;
   cwNumber = 0;
 
-  resultP0 = 0;
-  resultRo = 0;
   resultL = 0;
   resultLq = 0;
   resultW = 0;
   resultWq = 0;
-  resultCt = 0;
+  resultP0 = 0;
+  resultRo = 0;
+  
+  //resultCt = 0;
 
   onShowFlashMessage(text: string, success: boolean) {
     this.flashMessage = text;
@@ -43,21 +44,21 @@ export class Mm1Component implements OnInit {
 
   onSimulateRow() {
     const regDigits = /^\d+$/;
-    if (parseFloat(this.lambdaText) > 0) {
-      if (parseFloat(this.muText) > parseFloat(this.lambdaText)) {
-        if (parseFloat(this.csText) >= 0) {
-          if (parseFloat(this.cwText) >= 0) {
-            this.lambdaNumber = parseFloat(this.lambdaText);
-            this.muNumber = parseFloat(this.muText);
+    if (parseFloat(this.textLambda) > 0) {
+      if (parseFloat(this.textMu) > parseFloat(this.textLambda)) {
+        //if (parseFloat(this.csText) >= 0) {
+         // if (parseFloat(this.cwText) >= 0) {
+            this.numLambda = parseFloat(this.textLambda);
+            this.numMu = parseFloat(this.textMu);
             this.csNumber = parseFloat(this.csText);
             this.cwNumber = parseFloat(this.cwText);
             this.simulateRow();
-          } else {
-            this.onShowFlashMessage('Cw debe ser un número mayor o igual a cero', false);
-          }
-        } else {
-          this.onShowFlashMessage('Cs debe ser un número mayor o igual cero', false);
-        }
+        //  } else {
+           // this.onShowFlashMessage('Cw debe ser un número mayor o igual a cero', false);
+         // }
+        //} else {
+         // this.onShowFlashMessage('Cs debe ser un número mayor o igual cero', false);
+       // }
       } else {
         this.onShowFlashMessage('μ debe ser un número válido mayor a λ para que el sistema sea estable.', false);
       }
@@ -67,22 +68,24 @@ export class Mm1Component implements OnInit {
   }
 
   simulateRow() {
-    this.resultRo = (this.lambdaNumber) / (this.muNumber);
+    this.resultL = (this.numLambda) / ( this.numMu - this.numLambda );
+    this.resultLq = ( (this.numLambda) * (this.numLambda) ) / ( (this.numMu) * ( (this.numMu) - (this.numLambda) ) );
+    this.resultW = 1 / ( (this.numMu) - (this.numLambda) );
+    this.resultWq = (this.numLambda) / ( (this.numMu) * ( (this.numMu) - (this.numLambda) ) );
+    this.resultRo = (this.numLambda) / (this.numMu);
     this.resultP0 = (1 - this.resultRo);
-    this.resultL = (this.lambdaNumber) / ( this.muNumber - this.lambdaNumber );
-    this.resultLq = ( (this.lambdaNumber) * (this.lambdaNumber) ) / ( (this.muNumber) * ( (this.muNumber) - (this.lambdaNumber) ) );
-    this.resultW = 1 / ( (this.muNumber) - (this.lambdaNumber) );
-    this.resultWq = (this.lambdaNumber) / ( (this.muNumber) * ( (this.muNumber) - (this.lambdaNumber) ) );
+   
 
-    this.resultCt = (this.resultLq * this.cwNumber) + (this.sNumber * this.csNumber);
+    //this.resultCt = (this.resultLq * this.cwNumber) + (this.numS * this.csNumber);
 
-    this.resultRo = Math.round(this.resultRo * 10000) / 10000;
-    this.resultP0 = Math.round(this.resultP0 * 10000) / 10000;
+   
     this.resultL = Math.round(this.resultL * 10000) / 10000;
     this.resultLq = Math.round(this.resultLq * 10000) / 10000;
     this.resultW = Math.round(this.resultW * 10000) / 10000;
     this.resultWq = Math.round(this.resultWq * 10000) / 10000;
-    this.resultCt = Math.round(this.resultCt * 10000) / 10000;
+    this.resultRo = Math.round(this.resultRo * 10000) / 10000;
+    this.resultP0 = Math.round(this.resultP0 * 10000) / 10000;
+    //this.resultCt = Math.round(this.resultCt * 10000) / 10000;
 
     this.onShowFlashMessage('Medidas de desempeño y P0 calculadas con éxito', true);
   }
