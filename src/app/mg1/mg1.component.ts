@@ -11,18 +11,18 @@ export class Mg1Component implements OnInit {
   flashMessageSuccess = true;
   flashMessage = '';
 
-  lambdaText = '';
-  muText = '';
-  distributionText = '';
-  parameterErlangText = '';
-  parameterOtherText = '';
-  csText = '';
-  cwText = '';
+  textLambda = '';
+  textMu = '';
+  textDistribution = '';
+  textParamErlang = '';
+  textParamOther = '';
+ // csText = '';
+ // cwText = '';
 
   invalidParamText = '';
 
-  lambdaNumber = 0;
-  muNumber = 0;
+  numLambda = 0;
+  numMu = 0;
   parameterNumber = 0;
   csNumber = 0;
   cwNumber = 0;
@@ -50,23 +50,23 @@ export class Mg1Component implements OnInit {
 
   onSimulateRow() {
     const regDigits = /^\d+$/;
-    if (parseFloat(this.lambdaText)) {
-      if (parseFloat(this.muText) > parseFloat(this.lambdaText)) {
-        if (this.distributionText === '1' || this.distributionText === '2') {
+    if (parseFloat(this.textLambda)) {
+      if (parseFloat(this.textMu) > parseFloat(this.textLambda)) {
+        if (this.textDistribution === '1' || this.textDistribution === '2') {
           if (this.distributionExtraParamIsValid()) {
-            if (parseFloat(this.csText) >= 0) {
-              if (parseFloat(this.cwText) >= 0) {
-                this.lambdaNumber = parseFloat(this.lambdaText);
-                this.muNumber = parseFloat(this.muText);
-                this.csNumber = parseFloat(this.csText);
-                this.cwNumber = parseFloat(this.cwText);
+            //if (parseFloat(this.csText) >= 0) {
+             // if (parseFloat(this.cwText) >= 0) {
+                this.numLambda = parseFloat(this.textLambda);
+                this.numMu = parseFloat(this.textMu);
+               // this.csNumber = parseFloat(this.csText);
+                //this.cwNumber = parseFloat(this.cwText);
                 this.simulateRow();
-              } else {
-                this.onShowFlashMessage('Cw debe ser un número mayor o igual a cero', false);
-              }
-            } else {
-              this.onShowFlashMessage('Cs debe ser un número mayor o igual cero', false);
-            }
+              //} else {
+                //this.onShowFlashMessage('Cw debe ser un número mayor o igual a cero', false);
+              //}
+            //} else {
+              //this.onShowFlashMessage('Cs debe ser un número mayor o igual cero', false);
+            //}
 
           } else {
             this.onShowFlashMessage(this.invalidParamText, false);
@@ -85,20 +85,20 @@ export class Mg1Component implements OnInit {
   distributionExtraParamIsValid(): boolean {
     let paramIsValid = false;
     const regDigits = /^\d+$/;
-    switch (this.distributionText) {
+    switch (this.textDistribution) {
       case '1':
-        if (regDigits.test(this.parameterErlangText.trim()) && parseInt(this.parameterErlangText.trim(), 10) > 0) {
+        if (regDigits.test(this.textParamErlang.trim()) && parseInt(this.textParamErlang.trim(), 10) > 0) {
           paramIsValid = true;
-          this.parameterNumber = parseInt(this.parameterErlangText.trim(), 10);
+          this.parameterNumber = parseInt(this.textParamErlang.trim(), 10);
         } else {
           paramIsValid = false;
           this.invalidParamText = 'El parámetro k de Erlang debe ser un entero mayor a 0';
         }
         break;
       case '2':
-        if (parseFloat(this.parameterOtherText) >= 0) {
+        if (parseFloat(this.textParamOther) >= 0) {
           paramIsValid = true;
-          this.parameterNumber = parseFloat(this.parameterOtherText);
+          this.parameterNumber = parseFloat(this.textParamOther);
         } else {
           paramIsValid = false;
           this.invalidParamText = 'La desviación estándar de su distribución debe ser un número mayor o igual a cero';
@@ -109,26 +109,27 @@ export class Mg1Component implements OnInit {
   }
 
   simulateRow() {
-    this.resultRo = (this.lambdaNumber) / (this.muNumber);
+    this.resultRo = (this.numLambda) / (this.numMu);
     this.resultP0 = (1 - this.resultRo);
-    const firstLq = ((this.lambdaNumber * this.lambdaNumber) * this.getVariance(this.distributionText,
-      this.parameterNumber, this.muNumber) ) + (this.resultRo * this.resultRo);
+    const firstLq = ((this.numLambda * this.numLambda) * this.getVariance(this.textDistribution,
+      this.parameterNumber, this.numMu) ) + (this.resultRo * this.resultRo);
     const secondLq = 2 * this.resultP0;
     this.resultLq = firstLq / secondLq;
     this.resultL = (this.resultRo) + this.resultLq;
-    this.resultWq = (this.resultLq) / (this.lambdaNumber);
-    this.resultW = (this.resultWq) + ( 1 / (this.muNumber) );
+    this.resultWq = (this.resultLq) / (this.numLambda);
+    this.resultW = (this.resultWq) + ( 1 / (this.numMu) );
 
-    this.resultCt = (this.resultLq * this.cwNumber) + (this.sNumber * this.csNumber);
+    //this.resultCt = (this.resultLq * this.cwNumber) + (this.sNumber * this.csNumber);
 
-    this.resultRo = Math.round(this.resultRo * 10000) / 10000;
-    this.resultP0 = Math.round(this.resultP0 * 10000) / 10000;
+    
     this.resultL = Math.round(this.resultL * 10000) / 10000;
     this.resultLq = Math.round(this.resultLq * 10000) / 10000;
     this.resultW = Math.round(this.resultW * 10000) / 10000;
     this.resultWq = Math.round(this.resultWq * 10000) / 10000;
+    this.resultRo = Math.round(this.resultRo * 10000) / 10000;
+    this.resultP0 = Math.round(this.resultP0 * 10000) / 10000;
 
-    this.resultCt = Math.round(this.resultCt * 10000) / 10000;
+    //this.resultCt = Math.round(this.resultCt * 10000) / 10000;
 
     this.onShowFlashMessage('Medidas de desempeño y P0 calculadas con éxito', true);
   }
