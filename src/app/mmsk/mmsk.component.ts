@@ -119,7 +119,7 @@ export class MmskComponent implements OnInit {
     this.resultWq = Math.round(this.resultWq * 10000) / 10000;
     this.resultP0 = Math.round(this.resultP0 * 10000) / 10000;
     this.resultRo = Math.round(this.resultRo * 10000) / 10000;
-
+    this.lambdaE = Math.round(this.lambdaE*10000) / 10000;
     this.resultCt = Math.round(this.resultCt * 10000) / 10000;
 
     this.onShowFlashMessage('Medidas de desempeño y P0 calculadas con éxito', true);
