@@ -38,7 +38,7 @@
         <small id="inputSHelp" class="form-text text-muted">El número de servidores debe de ser un entero mayor a 1.</small>
       </div>
 
-      <!-- <div class="form-group">
+      <div class="form-group">
         <label for="inputCs">Cs: Costo de servicio en unidad monetaria</label>
         <input type="number" class="form-control" id="inputCs" aria-describedby="inputCsHelp"
                placeholder="Escriba el costo de servicio" [(ngModel)]="csText">
@@ -50,7 +50,7 @@
         <input type="number" class="form-control" id="inputCw" aria-describedby="inputCwHelp"
                placeholder="Escriba el costo de espera" [(ngModel)]="cwText">
         <small id="inputCwHelp" class="form-text text-muted">Cw debe ser un número mayor o igual a cero</small>
-      </div>-->
+      </div>
 
       <button type="submit" class="btn btn-info" (click)="onSimulateRow()">Calcular Medidas de Desempeño y P0</button>
 
@@ -85,12 +85,12 @@
       <h5>𝜌 (factor de utilización del sistema): {{ resultRo }}</h5>
     </div>
 
-    <!-- Costs 
+    
     <h3 class="display-3">Costo esperado del sistema:</h3>
     <hr>
     <div>
       <h5>Ct (costo total esperado): {{ resultCt }} unidades monetarias</h5>
-    </div>-->
+    </div>
 
   </div>
 </div>

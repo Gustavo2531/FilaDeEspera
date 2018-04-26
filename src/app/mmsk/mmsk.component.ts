@@ -14,8 +14,8 @@ export class MmskComponent implements OnInit {
   textMu = '';
   textS = '';
   textK = '';
- // csText = '';
-  //cwText = '';
+  csText = '';
+  cwText = '';
 
   csNumber = 0;
   cwNumber = 0;
@@ -51,20 +51,20 @@ export class MmskComponent implements OnInit {
         if (regDigits.test(this.textS.trim()) && parseInt(this.textS.trim(), 10) > 0
           && parseInt(this.textS.trim(), 10) < parseInt(this.textK.trim(), 10)) {
           if (( parseFloat(this.textMu) * parseInt(this.textS.trim(), 10)) > parseFloat(this.textLambda)) {
-           // if (parseFloat(this.csText) >= 0) {
-              //if (parseFloat(this.cwText) >= 0) {
+           if (parseFloat(this.csText) >= 0) {
+              if (parseFloat(this.cwText) >= 0) {
                 this.numLambda = parseFloat(this.textLambda);
                 this.numMu = parseFloat(this.textMu);
                 this.numS = parseInt(this.textS.trim(), 10);
                 this.numK = parseInt(this.textK.trim(), 10);
-                //this.csNumber = parseFloat(this.csText);
-                //this.cwNumber = parseFloat(this.cwText);
-              //} else {
-                //this.onShowFlashMessage('Cw debe ser un número mayor o igual a cero', false);
-              //}
-            //} else {
-              //this.onShowFlashMessage('Cs debe ser un número mayor o igual cero', false);
-            //}
+                this.csNumber = parseFloat(this.csText);
+                this.cwNumber = parseFloat(this.cwText);
+              } else {
+                this.onShowFlashMessage('Cw debe ser un número mayor o igual a cero', false);
+              }
+            } else {
+              this.onShowFlashMessage('Cs debe ser un número mayor o igual cero', false);
+            }
             this.simulateRow();
           } else {
             this.onShowFlashMessage('μ * s debe ser un número mayor a λ para que el sistema sea estable', false);
@@ -110,7 +110,7 @@ export class MmskComponent implements OnInit {
     this.resultW = this.resultWq + (1 / this.numMu);
     this.resultL = this.lambdaE * this.resultW;
 
-    //this.resultCt = (this.resultLq * this.cwNumber) + (this.numS * this.csNumber);
+    this.resultCt = (this.resultLq * this.cwNumber) + (this.numS * this.csNumber);
 
 
     this.resultL = Math.round(this.resultL * 10000) / 10000;
@@ -120,7 +120,7 @@ export class MmskComponent implements OnInit {
     this.resultP0 = Math.round(this.resultP0 * 10000) / 10000;
     this.resultRo = Math.round(this.resultRo * 10000) / 10000;
 
-    //this.resultCt = Math.round(this.resultCt * 10000) / 10000;
+    this.resultCt = Math.round(this.resultCt * 10000) / 10000;
 
     this.onShowFlashMessage('Medidas de desempeño y P0 calculadas con éxito', true);
   }
