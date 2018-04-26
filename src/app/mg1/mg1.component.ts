@@ -16,8 +16,8 @@ export class Mg1Component implements OnInit {
   textDistribution = '';
   textParamErlang = '';
   textParamOther = '';
- // csText = '';
- // cwText = '';
+  csText = '';
+  cwText = '';
 
   invalidParamText = '';
 
@@ -54,19 +54,19 @@ export class Mg1Component implements OnInit {
       if (parseFloat(this.textMu) > parseFloat(this.textLambda)) {
         if (this.textDistribution === '1' || this.textDistribution === '2') {
           if (this.distributionExtraParamIsValid()) {
-            //if (parseFloat(this.csText) >= 0) {
-             // if (parseFloat(this.cwText) >= 0) {
+            if (parseFloat(this.csText) >= 0) {
+              if (parseFloat(this.cwText) >= 0) {
                 this.numLambda = parseFloat(this.textLambda);
                 this.numMu = parseFloat(this.textMu);
-               // this.csNumber = parseFloat(this.csText);
-                //this.cwNumber = parseFloat(this.cwText);
+                this.csNumber = parseFloat(this.csText);
+                this.cwNumber = parseFloat(this.cwText);
                 this.simulateRow();
-              //} else {
-                //this.onShowFlashMessage('Cw debe ser un número mayor o igual a cero', false);
-              //}
-            //} else {
-              //this.onShowFlashMessage('Cs debe ser un número mayor o igual cero', false);
-            //}
+              } else {
+                this.onShowFlashMessage('Cw debe ser un número mayor o igual a cero', false);
+              }
+            } else {
+              this.onShowFlashMessage('Cs debe ser un número mayor o igual cero', false);
+            }
 
           } else {
             this.onShowFlashMessage(this.invalidParamText, false);
@@ -119,7 +119,7 @@ export class Mg1Component implements OnInit {
     this.resultWq = (this.resultLq) / (this.numLambda);
     this.resultW = (this.resultWq) + ( 1 / (this.numMu) );
 
-    //this.resultCt = (this.resultLq * this.cwNumber) + (this.sNumber * this.csNumber);
+    this.resultCt = (this.resultLq * this.cwNumber) + (this.sNumber * this.csNumber);
 
     
     this.resultL = Math.round(this.resultL * 10000) / 10000;
@@ -129,7 +129,7 @@ export class Mg1Component implements OnInit {
     this.resultRo = Math.round(this.resultRo * 10000) / 10000;
     this.resultP0 = Math.round(this.resultP0 * 10000) / 10000;
 
-    //this.resultCt = Math.round(this.resultCt * 10000) / 10000;
+    this.resultCt = Math.round(this.resultCt * 10000) / 10000;
 
     this.onShowFlashMessage('Medidas de desempeño y P0 calculadas con éxito', true);
   }

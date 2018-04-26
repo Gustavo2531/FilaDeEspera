@@ -71,7 +71,7 @@
     <small id="inputGHelp" class="form-text text-muted" style="margin-left: 15px;">Elija el tipo de distribución para el tiempo de servicio que más le convenga, también, puede elegir otro para proporcionar la varianza de otra distribución</small>
 
   </div>
-<!-- 
+
   <div class="form-group">
     <label for="inputCs">Cs: Costo de servicio en unidad monetaria</label>
     <input type="number" class="form-control" id="inputCs" aria-describedby="inputCsHelp"
@@ -85,7 +85,7 @@
            placeholder="Escriba el costo de espera" [(ngModel)]="cwText">
     <small id="inputCwHelp" class="form-text text-muted">Cw debe ser un número mayor o igual a cero</small>
   </div>
-  -->
+  
 
 
   <button type="submit" class="btn btn-info" (click)="onSimulateRow()">Calcular medidas de desempeño y P0</button>
@@ -119,12 +119,12 @@
       <h5>𝜌 (factor de utilización del sistema): {{ resultRo }}</h5>
     </div>
 
-    <!-- Costs 
+    
     <h3 class="display-3">Costo esperado del sistema:</h3>
     <hr>
     <div>
       <h5>Ct (costo total esperado): {{ resultCt }} unidades monetarias</h5>
     </div>
-  -->
+  
   </div>
 </div>
