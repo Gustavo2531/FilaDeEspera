@@ -28,7 +28,7 @@ export class Mm1Component implements OnInit {
   resultP0 = 0;
   resultRo = 0;
   
-  //resultCt = 0;
+  resultCt = 0;
 
   onShowFlashMessage(text: string, success: boolean) {
     this.flashMessage = text;
@@ -46,19 +46,19 @@ export class Mm1Component implements OnInit {
     const regDigits = /^\d+$/;
     if (parseFloat(this.textLambda) > 0) {
       if (parseFloat(this.textMu) > parseFloat(this.textLambda)) {
-        //if (parseFloat(this.csText) >= 0) {
-         // if (parseFloat(this.cwText) >= 0) {
+        if (parseFloat(this.csText) >= 0) {
+         if (parseFloat(this.cwText) >= 0) {
             this.numLambda = parseFloat(this.textLambda);
             this.numMu = parseFloat(this.textMu);
             this.csNumber = parseFloat(this.csText);
             this.cwNumber = parseFloat(this.cwText);
             this.simulateRow();
-        //  } else {
-           // this.onShowFlashMessage('Cw debe ser un número mayor o igual a cero', false);
-         // }
-        //} else {
-         // this.onShowFlashMessage('Cs debe ser un número mayor o igual cero', false);
-       // }
+          } else {
+            this.onShowFlashMessage('Cw debe ser un número mayor o igual a cero', false);
+        }
+        } else {
+          this.onShowFlashMessage('Cs debe ser un número mayor o igual cero', false);
+       }
       } else {
         this.onShowFlashMessage('μ debe ser un número válido mayor a λ para que el sistema sea estable.', false);
       }
@@ -76,7 +76,7 @@ export class Mm1Component implements OnInit {
     this.resultP0 = (1 - this.resultRo);
    
 
-    //this.resultCt = (this.resultLq * this.cwNumber) + (this.numS * this.csNumber);
+    this.resultCt = (this.resultLq * this.cwNumber) + (this.numS * this.csNumber);
 
    
     this.resultL = Math.round(this.resultL * 10000) / 10000;
@@ -85,7 +85,7 @@ export class Mm1Component implements OnInit {
     this.resultWq = Math.round(this.resultWq * 10000) / 10000;
     this.resultRo = Math.round(this.resultRo * 10000) / 10000;
     this.resultP0 = Math.round(this.resultP0 * 10000) / 10000;
-    //this.resultCt = Math.round(this.resultCt * 10000) / 10000;
+    this.resultCt = Math.round(this.resultCt * 10000) / 10000;
 
     this.onShowFlashMessage('Medidas de desempeño y P0 calculadas con éxito', true);
   }
